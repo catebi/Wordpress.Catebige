@@ -147,6 +147,13 @@ const svgRing = `
         var markers=L.markerClusterGroup({
             spiderfyOnMaxZoom: false,
             showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
+            spiderfyOnMaxZoom: true,
+            spiderfyOnEveryZoom: false,
+            removeOutsideVisibleBounds: true,
+            animate: true,
+            animateAddingMarkers: true,
+            chunkedLoading: false,
             iconCreateFunction: function(cluster) {
                 return L.divIcon({
                     html: '<div><span>'+cluster.getChildCount()+'</span></div>',
