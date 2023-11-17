@@ -69,7 +69,7 @@
 
         .switcher {
             position: absolute;
-            top: 3%;
+            bottom: 2%;
             left: calc(50% - 4em);
             z-index: 1000;
         }
@@ -143,7 +143,6 @@ const svgRing = `
             className: "",
         });
 
-        // Create a marker cluster group
         var markers=L.markerClusterGroup({
             spiderfyOnMaxZoom: false,
             showCoverageOnHover: false,
@@ -231,7 +230,7 @@ const svgRing = `
                     <input type="radio" name="icon" value="ring" checked>
                     <span class="svg-icon">${svgRing}</span>
                     <span>&nbsp;Ring</span>
-                </label><br>
+                </label>
                 <label class="icon-option">
                     <input type="radio" name="icon" value="tag">
                     <span class="svg-icon">${svgTag}</span>
