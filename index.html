@@ -29,9 +29,8 @@
         }
 
         #map {
-            width: 100em;
-            height: 500px;
-            border-radius: 60px;
+            width: 157vh;
+            height: 100vh;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
             overflow: hidden;
         }
@@ -46,7 +45,6 @@
             height: 30px;
             margin-left: 5px;
             margin-top: 5px;
-
             text-align: center;
             border-radius: 15px;
             font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -77,27 +75,27 @@
         }
 
         .icon-option {
-            display: inline-block;
+            display: flex;
             cursor: pointer;
+            background-color: white;
             padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 25px;
             margin-right: 5px;
-            width: 8em;
+            width: 6.5em;
             height: 2em;
             margin-bottom: 5px;
+            align-items: center;
+            justify-content: center;
         }
 
         .icon-option .svg-icon {
-            display: inline-block;
+            display: flex;
             vertical-align: middle;
+            padding-left: 2px;
         }
 
     </style>
-
-
 </head>
-
 <body>
     <div id="icon-switcher" class="switcher">
     </div>
@@ -161,8 +159,7 @@ const svgRing = `
             zoomControl: false,
             attributionControl: false,
         })
-        // tbilisi geo-position
-        .setView([41.6938,44.8015], 15);
+        .setView([41.6938,44.8015], 13); // tbilisi geo-position
 
         //https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}
         //https://tile.jawg.io/light/12/2083/1461.png?api-key=community
@@ -226,18 +223,14 @@ const svgRing = `
                 <label class="icon-option">
                     <input type="radio" name="icon" value="ring" checked>
                     <span class="svg-icon">${svgRing}</span>
-                    <span>Ring Icon</span>
+                    <span>&nbsp;Ring</span>
                 </label><br>
                 <label class="icon-option">
                     <input type="radio" name="icon" value="tag">
                     <span class="svg-icon">${svgTag}</span>
-                    <span>Tag Icon</span>
+                    <span>&nbsp;Tag</span>
                 </label>`;
         }
-
-
     </script>
-
 </body>
-
 </html>
