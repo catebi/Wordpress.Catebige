@@ -6,7 +6,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- <title>Quick Start - Leaflet</title>     -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <title>Wordpress Catebi Map</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -24,18 +26,14 @@
             justify-content: center;
             align-items: center;
             background: #f7f7f7;
-            /* Optional: adds a background color to the body */
         }
 
         #map {
-            width: 1200px;
+            width: 100em;
             height: 500px;
             border-radius: 60px;
-            /* Rounded corners */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-            /* Shadow effect */
             overflow: hidden;
-            /* Ensures the map corners are rounded */
         }
 
         .cat-marker-cluster {
@@ -70,12 +68,39 @@
         .marker-cluster-medium div {
             background-color: #FF5D03;
         }
+
+        .switcher {
+            position: absolute;
+            top: 3%;
+            left: calc(50% - 4em);
+            z-index: 1000;
+        }
+
+        .icon-option {
+            display: inline-block;
+            cursor: pointer;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 5px;
+            width: 8em;
+            height: 2em;
+            margin-bottom: 5px;
+        }
+
+        .icon-option .svg-icon {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
     </style>
 
 
 </head>
 
 <body>
+    <div id="icon-switcher" class="switcher">
+    </div>
 
     <div id="map"></div>
 
@@ -85,26 +110,38 @@
     <script>
 
         const svgTag=
-            `<svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="10pt" height="30pt" viewBox="0 0 830.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
-    <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="#FF5D03" stroke="none">
-    <path d="M3855 12789 c-555 -44 -1043 -176 -1530 -414 -1457 -712 -2370 -2223 -2322 -3840 19 -605 152 -1155 406 -1680 109 -225 183 -353 331 -575 65 -96 856 -1369 1760 -2827 903 -1459 1646 -2653 1650 -2653 4 0 747 1194 1650 2652 904 1459 1695 2732 1760 2828 148 222 222 350 331 575 421 869 520 1869 279 2821 -244 958 -822 1795 -1640 2371 -696 491 -1551 759 -2404 752 -94 -1 -216 -5 -271 -10z m635 -1764 c440 -80 813 -271 1120 -575 769 -761 825 -1980 130 -2812 -335 -402 -817 -663 -1344 -728 -114 -14 -378 -14 -492 0 -853 105 -1550 715 -1764 1544 -141 545 -52 1136 243 1613 330 531 862 876 1497 968 130 19 481 13 610 -10z"/>
+`
+<svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="17pt" height="24pt"
+    viewBox="0 0 830.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
+    <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="#FF5D03"
+        stroke="none">
+        <path
+            d="M3855 12789 c-555 -44 -1043 -176 -1530 -414 -1457 -712 -2370 -2223 -2322 -3840 19 -605 152 -1155 406 -1680 109 -225 183 -353 331 -575 65 -96 856 -1369 1760 -2827 903 -1459 1646 -2653 1650 -2653 4 0 747 1194 1650 2652 904 1459 1695 2732 1760 2828 148 222 222 350 331 575 421 869 520 1869 279 2821 -244 958 -822 1795 -1640 2371 -696 491 -1551 759 -2404 752 -94 -1 -216 -5 -271 -10z m635 -1764 c440 -80 813 -271 1120 -575 769 -761 825 -1980 130 -2812 -335 -402 -817 -663 -1344 -728 -114 -14 -378 -14 -492 0 -853 105 -1550 715 -1764 1544 -141 545 -52 1136 243 1613 330 531 862 876 1497 968 130 19 481 13 610 -10z" />
     </g>
-</svg>`
+</svg>
+`
 
-        const svgCircle=`<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45" fill="none">
-    <ellipse cx="22.4813" cy="22.5" rx="10" ry="10" fill="#FF5D03"/>
-</svg>`;
-
+const svgRing = `
+<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25">
+    <circle cx="12.5" cy="12.5" r="7" stroke="#FF5D03" stroke-width="6" fill="none"/>
+</svg>
+`;
         const svgClusterIcon=`
 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45" fill="none">
     <ellipse cx="22.4813" cy="22.5" rx="22.4813" ry="22.5" fill="#FF5D03"/>
 </svg>`;
 
-        var pointIcon=L.divIcon({
+        var ringIcon=L.divIcon({
+            html: svgRing,
+            iconSize: [25, 25],
+            iconAnchor: [16, 16],
+            className: "",
+        });
+
+        var tagIcon = L.divIcon({
             html: svgTag,
-            iconSize: [38,95], // Size of the icon
-            iconAnchor: [22,94], // Point of the icon which will correspond to marker's location
-            popupAnchor: [-3,-76], // Point from which the popup should open relative to the iconAnchor
+            iconSize: [24, 30],
+            iconAnchor: [16, 32],
             className: "",
         });
 
@@ -123,7 +160,9 @@
         const map=L.map('map',{
             zoomControl: false,
             attributionControl: false,
-        }).setView([41.6938,44.8015],12);
+        })
+        // tbilisi geo-position
+        .setView([41.6938,44.8015], 15);
 
         //https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}
         //https://tile.jawg.io/light/12/2083/1461.png?api-key=community
@@ -131,7 +170,9 @@
         //https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png
         //https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png
         //https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.{ext}
+        //https://tile.openstreetmap.org/{z}/{x}/{y}.png
 
+        //https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png
         const tiles=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
             maxZoom: 20
         }).addTo(map);
@@ -140,20 +181,60 @@
         function addMarkers(points) {
             points.forEach(point => {
                 const [lat,lng]=point.geoLocation.split(', ').map(Number);
-                const marker=L.marker([lat,lng],{ icon: pointIcon });
+                const marker=L.marker([lat,lng],{ icon: ringIcon });
                 markers.addLayer(marker);
             });
 
             map.addLayer(markers);
         }
 
-        // Fetch points from the API
+        var points;
+
         fetch('https://api.catebi.ge/api/map/getcatsshort')
-            .then(response => response.json())
-            .then(data => {
-                addMarkers(data);
-            })
-            .catch(error => console.error('Error fetching points:',error));
+        .then(response => response.json())
+        .then(data => {
+            points = data;
+            addMarkers(points);
+        })
+        .catch(error => console.error('Error fetching points:', error));
+
+        document.getElementById('icon-switcher').addEventListener('change', function(event) {
+            var selectedIcon = event.target.value;
+            var newIcon = selectedIcon === 'tag' ? tagIcon : ringIcon;
+            switchIcons(newIcon);
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const mapContainer = document.getElementById('icon-switcher'); // Replace with your actual map container ID
+            mapContainer.insertAdjacentHTML('beforeend', createIconSwitcher());
+        });
+
+        function switchIcons(newIcon) {
+            markers.clearLayers();
+
+            points.forEach(point => {
+                const [lat, lng] = point.geoLocation.split(', ').map(Number);
+                const marker = L.marker([lat, lng], { icon: newIcon });
+                markers.addLayer(marker);
+            });
+
+            map.addLayer(markers);
+        }
+
+        function createIconSwitcher() {
+            return `
+                <label class="icon-option">
+                    <input type="radio" name="icon" value="ring" checked>
+                    <span class="svg-icon">${svgRing}</span>
+                    <span>Ring Icon</span>
+                </label><br>
+                <label class="icon-option">
+                    <input type="radio" name="icon" value="tag">
+                    <span class="svg-icon">${svgTag}</span>
+                    <span>Tag Icon</span>
+                </label>`;
+        }
+
 
     </script>
 
