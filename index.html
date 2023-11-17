@@ -213,6 +213,7 @@ const svgRing = `
         });
 
         function switchIcons(newIcon) {
+            map.removeLayer(markers);
             markers.clearLayers();
 
             points.forEach(point => {
