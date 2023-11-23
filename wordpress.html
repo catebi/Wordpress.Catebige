@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base target="_top">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f7f7f7;
+        }
+
+        #map {
+            width: 90vw;  /* 100% of the viewport width */
+            height: 50vh;  /* 50% of the viewport height */
+            border-radius: 60px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .cat-marker-cluster {
+            background-clip: padding-box;
+            border-radius: 20px;
+        }
+
+        .cat-marker-cluster div {
+            width: 30px;
+            height: 30px;
+            margin-left: 5px;
+            margin-top: 5px;
+            text-align: center;
+            border-radius: 15px;
+            font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .cat-marker-cluster span {
+            line-height: 30px;
+            color: white;
+            font-family: "Inter-Medium", Helvetica;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        .marker-cluster-medium {
+            background-color: #FF5D03;
+        }
+
+        .marker-cluster-medium div {
+            background-color: #FF5D03;
+        }
+
+        .icon-option {
+            display: flex;
+            cursor: pointer;
+            background-color: white;
+            padding: 5px;
+            border-radius: 25px;
+            margin-right: 5px;
+            width: 6.5em;
+            height: 2em;
+            margin-bottom: 5px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-option .svg-icon {
+            display: flex;
+            vertical-align: middle;
+            padding-left: 2px;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js"></script>
+    <script>
+
+        const svgTag=
+`
+<svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="17pt" height="24pt"
+    viewBox="0 0 830.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
+    <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="#FF5D03"
+        stroke="none">
+        <path
+            d="M3855 12789 c-555 -44 -1043 -176 -1530 -414 -1457 -712 -2370 -2223 -2322 -3840 19 -605 152 -1155 406 -1680 109 -225 183 -353 331 -575 65 -96 856 -1369 1760 -2827 903 -1459 1646 -2653 1650 -2653 4 0 747 1194 1650 2652 904 1459 1695 2732 1760 2828 148 222 222 350 331 575 421 869 520 1869 279 2821 -244 958 -822 1795 -1640 2371 -696 491 -1551 759 -2404 752 -94 -1 -216 -5 -271 -10z m635 -1764 c440 -80 813 -271 1120 -575 769 -761 825 -1980 130 -2812 -335 -402 -817 -663 -1344 -728 -114 -14 -378 -14 -492 0 -853 105 -1550 715 -1764 1544 -141 545 -52 1136 243 1613 330 531 862 876 1497 968 130 19 481 13 610 -10z" />
+    </g>
+</svg>
+`
+        const svgClusterIcon=`
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45" fill="none">
+    <ellipse cx="22.4813" cy="22.5" rx="22.4813" ry="22.5" fill="#FF5D03"/>
+</svg>`;
+
+        var tagIcon = L.divIcon({
+            html: svgTag,
+            iconSize: [24, 30],
+            iconAnchor: [16, 32],
+            className: "",
+        });
+
+        var markers=L.markerClusterGroup({
+            spiderfyOnMaxZoom: false,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
+            spiderfyOnMaxZoom: true,
+            spiderfyOnEveryZoom: false,
+            removeOutsideVisibleBounds: true,
+            animate: true,
+            animateAddingMarkers: true,
+            chunkedLoading: false,
+            iconCreateFunction: function(cluster) {
+                return L.divIcon({
+                    html: '<div><span>'+cluster.getChildCount()+'</span></div>',
+                    className: 'cat-marker-cluster marker-cluster-medium',iconSize: new L.Point(40,40)
+                });
+            }
+        });
+
+        const map=L.map('map',{
+            zoomControl: false,
+            attributionControl: false,
+            touchZoom: false,
+            scrollWheelZoom: false
+        })
+        .setView([41.6938,44.8015], 13); // tbilisi geo-position
+
+        //https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}
+        //https://tile.jawg.io/light/12/2083/1461.png?api-key=community
+        //https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png
+        //https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png
+        //https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png
+        //https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.{ext}
+        //https://tile.openstreetmap.org/{z}/{x}/{y}.png
+
+        //https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png
+        const tiles=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+            maxZoom: 20
+        }).addTo(map);
+
+        // Function to add markers to the map
+        function addMarkers(points) {
+            points.forEach(point => {
+                const [lat,lng]=point.geoLocation.split(', ').map(Number);
+                const marker=L.marker([lat,lng],{ icon: tagIcon });
+                markers.addLayer(marker);
+            });
+
+            map.addLayer(markers);
+        }
+
+        var points;
+
+        fetch('https://api.catebi.ge/api/map/getcatsshort')
+        .then(response => response.json())
+        .then(data => {
+            points = data;
+            addMarkers(points);
+        })
+        .catch(error => console.error('Error fetching points:', error));
+
+    </script>
+</body>
+</html>

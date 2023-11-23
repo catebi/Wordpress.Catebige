@@ -1,0 +1,59 @@
+#map {
+    width: 90vw;  /* 100% of the viewport width */
+    height: 50vh;  /* 50% of the viewport height */
+    border-radius: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.cat-marker-cluster {
+    background-clip: padding-box;
+    border-radius: 20px;
+}
+
+.cat-marker-cluster div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-top: 5px;
+    text-align: center;
+    border-radius: 15px;
+    font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.cat-marker-cluster span {
+    line-height: 30px;
+    color: white;
+    font-family: "Inter-Medium", Helvetica;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.marker-cluster-medium {
+    background-color: #FF5D03;
+}
+
+.marker-cluster-medium div {
+    background-color: #FF5D03;
+}
+
+.icon-option {
+    display: flex;
+    cursor: pointer;
+    background-color: white;
+    padding: 5px;
+    border-radius: 25px;
+    margin-right: 5px;
+    width: 6.5em;
+    height: 2em;
+    margin-bottom: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-option .svg-icon {
+    display: flex;
+    vertical-align: middle;
+    padding-left: 2px;
+}
