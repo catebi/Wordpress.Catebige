@@ -82,15 +82,18 @@ function kava_child_structures( $structures_manager ) {
 
 }
 
+/* Add Leaflet Map Scripts */
 function add_leaflet_scripts() {
     // Enqueue Leaflet CSS
     wp_enqueue_style( 'leaflet-css', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css' );
     wp_enqueue_style( 'leaflet-markercluster-default-css', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css' );
     wp_enqueue_style( 'leaflet-markercluster-css', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css' );
+	wp_enqueue_style( 'leaflet-gesture-handling-css', 'https://unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css' );
 
     // Enqueue Leaflet JavaScript
     wp_enqueue_script( 'leaflet-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), null, true );
     wp_enqueue_script( 'leaflet-markercluster-js', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js', array(), null, true );
+	wp_enqueue_script( 'leaflet-gesture-handling-js', 'https://unpkg.com/leaflet-gesture-handling', array(), null, true );
 
     // Custom Script for Map Initialization
     wp_enqueue_script( 'main-map-js', get_template_directory_uri() . '/main-map.js', array(), null, true );

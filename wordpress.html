@@ -14,6 +14,8 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css" />
+    <link rel="stylesheet" href="css/leaflet-gesture-handling.min.css" type="text/css">
+
 
     <style>
         html,
@@ -27,10 +29,14 @@
         }
 
         #map {
-            width: 90vw;  /* 100% of the viewport width */
-            height: 50vh;  /* 50% of the viewport height */
+            width: 98.6vw;
+            /* 100% of the viewport width */
+            height: 50vh;
+            /* 50% of the viewport height */
+            max-width: 1200px;
             border-radius: 60px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            /* box-shadow: 0px 3px 26px 0px rgba(0, 0, 0, 0.11); */
+            box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.11), 0px 0px 26px 0px rgba(0, 0, 0, 0.08);
             overflow: hidden;
         }
 
@@ -86,9 +92,25 @@
             padding-left: 2px;
         }
 
+        @media(max-width: 767px) {
+            #map {
+                width: 90vw;
+                max-width: 767px;
+            }
+        }
+
+
+        @media(min-width: 768px) {
+            #map {
+                width: 96vw;
+                max-width: 1200px;
+            }
+        }
     </style>
 </head>
+
 <body>
+
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
@@ -97,7 +119,7 @@
     <script>
 
         const svgTag=
-`
+            `
 <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="17pt" height="24pt"
     viewBox="0 0 830.000000 1280.000000" preserveAspectRatio="xMidYMid meet">
     <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="#FF5D03"
@@ -112,10 +134,10 @@
     <ellipse cx="22.4813" cy="22.5" rx="22.4813" ry="22.5" fill="#FF5D03"/>
 </svg>`;
 
-        var tagIcon = L.divIcon({
+        var tagIcon=L.divIcon({
             html: svgTag,
-            iconSize: [24, 30],
-            iconAnchor: [16, 32],
+            iconSize: [24,30],
+            iconAnchor: [16,32],
             className: "",
         });
 
@@ -141,9 +163,10 @@
             zoomControl: false,
             attributionControl: false,
             touchZoom: false,
-            scrollWheelZoom: false
+            scrollWheelZoom: false,
+            dragging: false
         })
-        .setView([41.6938,44.8015], 13); // tbilisi geo-position
+            .setView([41.6938,44.8015],13); // tbilisi geo-position
 
         //https://{s}.tile.jawg.io/jawg-light/{z}/{x}/{y}{r}.png?access-token={accessToken}
         //https://tile.jawg.io/light/12/2083/1461.png?api-key=community
@@ -172,13 +195,14 @@
         var points;
 
         fetch('https://api.catebi.ge/api/map/getcatsshort')
-        .then(response => response.json())
-        .then(data => {
-            points = data;
-            addMarkers(points);
-        })
-        .catch(error => console.error('Error fetching points:', error));
+            .then(response => response.json())
+            .then(data => {
+                points=data;
+                addMarkers(points);
+            })
+            .catch(error => console.error('Error fetching points:',error));
 
     </script>
 </body>
+
 </html>
