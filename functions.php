@@ -93,9 +93,15 @@ function add_leaflet_scripts() {
     // Enqueue Leaflet JavaScript
     wp_enqueue_script( 'leaflet-js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', array(), null, true );
     wp_enqueue_script( 'leaflet-markercluster-js', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster.js', array(), null, true );
-	wp_enqueue_script( 'leaflet-gesture-handling-js', 'https://unpkg.com/leaflet-gesture-handling', array(), null, true );
 
     // Custom Script for Map Initialization
     wp_enqueue_script( 'main-map-js', get_template_directory_uri() . '/main-map.js', array(), null, true );
+	wp_enqueue_script( 'leaflet-gesture-handling-js', get_template_directory_uri() . '/leaflet-gesture-handling.js', array(), null, true );
 }
 add_action( 'wp_enqueue_scripts', 'add_leaflet_scripts' );
+
+function add_clipboard_scripts() {
+    wp_enqueue_script('clipboard', 'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js', array(), null, true);
+}
+
+add_action('wp_enqueue_scripts', 'add_clipboard_scripts');

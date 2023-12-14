@@ -46,11 +46,14 @@ var markers = L.markerClusterGroup({
 const map = L.map('map', {
   zoomControl: false,
   attributionControl: false,
-  // touchZoom: true,
-  // scrollWheelZoom: true,
-  // boxZoom: true,
-  // dragging: true //!L.Browser.mobile,
-  gestureHandling: true
+  gestureHandling: true,
+  gestureHandlingOptions: {
+    text: {
+        // touch: "Hey bro, use two fingers to move the map",
+        // scroll: "Hey bro, use ctrl + scroll to zoom the map",
+        // scrollMac: "Hey bro, use \u2318 + scroll to zoom the map"
+    }
+  }
 }).setView([41.6938, 44.8015], 13); // tbilisi geo-position
 
 const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
