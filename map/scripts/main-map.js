@@ -48,11 +48,12 @@ const map = L.map('map', {
   attributionControl: false,
   gestureHandling: true,
   gestureHandlingOptions: {
-    text: {
-        touch: "Hey bro, use two fingers to move the map",
-        scroll: "Hey bro, use ctrl + scroll to zoom the map",
-        scrollMac: "Hey bro, use \u2318 + scroll to zoom the map"
-    }
+    // text: {
+    //     touch: "Hey bro, use two fingers to move the map",
+    //     scroll: "Hey bro, use ctrl + scroll to zoom the map",
+    //     scrollMac: "Hey bro, use \u2318 + scroll to zoom the map"
+    // },
+    duration: 1000
   }
 }).setView([41.6938, 44.8015], 13); // tbilisi geo-position
 
