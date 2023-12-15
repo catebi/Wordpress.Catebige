@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Clipboard Page</title>
+    <link rel="stylesheet" href="css/wp-clipboard.css">
+
+    <style>
+        .copyboard-input-container {
+            display: flex;
+            align-items: center;
+            background-color: #E6F4F1;
+            border-radius: 20px;
+            padding: 5px 10px;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .input-field {
+            border: none;
+            background-color: transparent;
+            margin-right: 10px;
+            flex-grow: 1;
+            font-size: 16px;
+            /* Adjust the font size as needed */
+        }
+
+        .input-field:focus {
+            outline: none;
+        }
+    </style>
+
+    <script src="scripts/clipboard.min.js"></script> <!-- Clipboard.js library -->
+    <script>
+        document.addEventListener('DOMContentLoaded',function() {
+            var clipboard=new ClipboardJS('.copyboard-icon',{
+                target: function(trigger) {
+                    return trigger.previousElementSibling;
+                }
+            });
+
+            clipboard.on('success',function(e) {
+                var tooltip = e.trigger.querySelector('.tooltip');
+                var tooltipText = tooltip.getAttribute('aria-label');
+                tooltip.innerText = tooltipText;
+                tooltip.style.visibility = 'visible';
+                setTimeout(function() {
+                    tooltip.style.visibility = 'hidden';
+                }, 750);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="copyboard-input-container">
+        <input type="text" class="input-field" value="GE94CD0360000033523815" id="copy-input-one">
+        <div class="copyboard-icon" data-clipboard-target="#copy-input-one">
+            <span class="tooltip" aria-label="Copied"></span>
+        </div>
+    </div>
+
+    <br />
+    <div class="copyboard-input-container">
+        <input type="text" class="input-field" value="USFJKHJ83748374837" id="copy-input-two">
+        <div class="copyboard-icon" data-clipboard-target="#copy-input-two">
+            <span class="tooltip" aria-label="Copied"></span>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -102,6 +102,7 @@ add_action( 'wp_enqueue_scripts', 'add_leaflet_scripts' );
 
 function add_clipboard_scripts() {
     wp_enqueue_script('clipboard', 'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js', array(), null, true);
+	wp_enqueue_script('main-clipboard-js', get_template_directory_uri() . '/main-clipboard.js', array(), null, true );
 }
 
 add_action('wp_enqueue_scripts', 'add_clipboard_scripts');
