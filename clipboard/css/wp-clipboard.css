@@ -30,8 +30,8 @@
         padding: 7px;
         position: relative;
         z-index: 1000;
-        top: 142%;
-        left: -77%;
+        top: 42px;
+        left: -40px;
         transform: translateX(-50%);
         transition: visibility 0.5s, opacity 0.5s ease-in-out;
     }
