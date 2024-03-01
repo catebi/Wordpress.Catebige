@@ -13,8 +13,12 @@
   color: #454647;
 }
 
+.description-404 {
+    font-weight: 300;
+}
+
 .button-group-404 {
-    width: 460px;
+    width: 500px;
 }
 
 .button-404-wrapper {
