@@ -82,7 +82,7 @@ function kava_child_structures( $structures_manager ) {
 
 }
 
-// Add custom leaflet map resources
+/* Add Leaflet Map Scripts */
 function add_leaflet_scripts() {
     // Enqueue Leaflet CSS
     wp_enqueue_style( 'leaflet-css', get_template_directory_uri() . '/map/css/leaflet.css' );
@@ -101,7 +101,6 @@ function add_leaflet_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'add_leaflet_scripts' );
 
-// Add Clipboard resources
 function add_clipboard_scripts() {
 	// Enqueue Clipboard CSS
 	wp_enqueue_style( 'wp-clipboard', get_template_directory_uri() . '/clipboard/css/wp-clipboard.css' );
@@ -111,17 +110,3 @@ function add_clipboard_scripts() {
 	wp_enqueue_script('main-clipboard-js', get_template_directory_uri() . '/clipboard/scripts/main-clipboard.js', array(), null, true );
 }
 add_action('wp_enqueue_scripts', 'add_clipboard_scripts');
-
-// add Custom 404 resources
-function add_custom_404_script() {
-	wp_enqueue_style( 'custom-404-css', get_template_directory_uri() . '/custom/404/css/styles-404.css' );
-
-    wp_enqueue_script('custom-404-script', get_template_directory_uri() . '/custom/404/scripts/custom-404.js', array(), '1.0.0', true);
-
-    // Prepare the base URL for your images
-    $theme_base_url = get_template_directory_uri() . '/custom/404/images/';
-
-    // Localize the script with your data
-    wp_localize_script('custom-404-script', 'themeImages', array('baseUrl' => $theme_base_url));
-}
-add_action('wp_enqueue_scripts', 'add_custom_404_script');
