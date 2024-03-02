@@ -1,63 +1,98 @@
 document.addEventListener("DOMContentLoaded", function() {
     // uncomment for local purposes
-    // var themeImages = themeImages || { baseUrl: '../404/images/' };
+    // var scriptParams = {
+    //     "themeImages": { baseUrl: '../404/images/' },
+    //     "locale": "ru_RU"
+    // };
 
-    const title = '404';
-    const description = 'Something went wrong...';
+    const translations = {
+        "en_US": {
+            "title": "404",
+            "description": "Something went wrong...",
+            "goBackText": "Go back",
+            "showMoreText": "Show one more cat"
+        },
+        "ka_GE": {
+            "title": "404",
+            "description": "რაღაც არასწორია...",
+            "goBackText": "დაბრუნება",
+            "showMoreText": "მეტი კატის ჩვენება"
+        },
+        "ru_RU": {
+            "title": "404",
+            "description": "Что-то пошло не так...",
+            "goBackText": "Вернуться назад",
+            "showMoreText": "Показать еще одного кота"
+        }
+    };
+
+    // Accessing the base URL for images
+    const themeImagesUrl = scriptParams.themeImages.baseUrl;
+
+    // Get the current locale passed from PHP
+    const currentLocale = scriptParams.locale || 'en_US'; // Default to English if undefined
+
+    // Select the correct translations based on the current locale
+    const localizedTexts = translations[currentLocale];
+
+
+    const title = localizedTexts.title;
+    const description = localizedTexts.description;
+
     const buttonConfigs = [
-        { text: 'Go back', href: "/", className: "go-back-button" },
-        { text: 'Show one more cat, please', href: "#", className: "one-more-button" }
+        { text: localizedTexts.goBackText, href: "/", className: "go-back-button" },
+        { text: localizedTexts.showMoreText, href: "#", className: "one-more-button" }
     ];
 
     const configs = [
         {
-            title: { fontSize: '320px', position: { left: '50%', top: '15%', transform: 'translate(-50%, -50%)'  } },
-            description: { position: { left: '50%', top: '85%', transform: 'translate(-50%, -50%)'  } },
-            imageUrl: themeImages.baseUrl + 'cat_01.png',
-            imageSize: { width: 'auto', height: '50vh' },
-            imagePosition: { top: '60%', left: '50%', transform: 'translate(-50%, -50%)' },
-            buttonGroup: {
-                position: { top: '100%', left: '50%', transform: 'translate(-50%, -50%)' }
-            },
-        },
-        {
-            title: { fontSize: '220px', position: { left: '10%', top: '20%', transform: 'translate(-0%, -50%)'  } },
-            description: { position: { left: '10%', top: '55%', transform: 'translate(-0%, -50%)'  } },
-            imageUrl: themeImages.baseUrl + 'cat_02.png',
-            imageSize: { width: 'auto', height: '50vh' },
-            imagePosition: { top: '40%', left: '70%', transform: 'translate(-50%, -50%)' },
+            title: { fontSize: '250px', position: { top: '20%', left: '10%', transform: 'translate(-0%, -50%)' } },
+            description: { position: { top: '55%', left: '10%', transform: 'translate(-0%, -50%)' } },
+            imageUrl: themeImagesUrl + 'cat_01.png',
+            imageSize: { width: 'auto', height: '45vh' },
+            imagePosition: { top: '50%', left: '75%', transform: 'translate(-50%, -50%)' },
             buttonGroup: {
                 position: { top: '65%', left: '10%', transform: 'translate(-00%, -50%)' }
             },
         },
         {
-            title: { fontSize: '220px', position: { left: '10%', top: '20%', transform: 'translate(-0%, -50%)'  } },
-            description: { position: { left: '10%', top: '55%', transform: 'translate(-0%, -50%)'  } },
-            imageUrl: themeImages.baseUrl + 'cat_03.png',
+            title: { fontSize: '250px', position: { top: '20%', left: '10%', transform: 'translate(-0%, -50%)'  } },
+            description: { position: { top: '55%', left: '10%', transform: 'translate(-0%, -50%)'  } },
+            imageUrl: themeImagesUrl + 'cat_02.png',
             imageSize: { width: 'auto', height: '50vh' },
-            imagePosition: { top: '50%', left: '70%', transform: 'translate(-50%, -50%)' },
+            imagePosition: { top: '50%', left: '75%', transform: 'translate(-50%, -50%)' },
             buttonGroup: {
                 position: { top: '65%', left: '10%', transform: 'translate(-00%, -50%)' }
             },
         },
         {
-            title: { fontSize: '320px', position: { left: '50%', top: '-20%', transform: 'translate(-50%, -0%)'  } },
-            description: { position: { left: '50%', top: '70%', transform: 'translate(-50%, -0%)'  } },
-            imageUrl: themeImages.baseUrl + 'cat_04.png',
+            title: { fontSize: '250px', position: { top: '20%', left: '10%', transform: 'translate(-0%, -50%)'  } },
+            description: { position: { top: '55%', left: '10%', transform: 'translate(-0%, -50%)' } },
+            imageUrl: themeImagesUrl + 'cat_03.png',
             imageSize: { width: 'auto', height: '50vh' },
-            imagePosition: { left: '50%', top: '23%', transform: 'translate(-50%, -0%)' },
+            imagePosition: { top: '50%', left: '75%', transform: 'translate(-50%, -50%)' },
             buttonGroup: {
-                position: { left: '50%', top: '80%', transform: 'translate(-50%, -0%)' }
+                position: { top: '65%', left: '10%', transform: 'translate(-00%, -50%)' }
             },
         },
         {
-            title: { fontSize: '320px', position: { left: '50%', top: '5%', transform: 'translate(-50%, -50%)'  } },
-            description: { position: { left: '50%', top: '75%', transform: 'translate(-50%, -50%)'  } },
-            imageUrl: themeImages.baseUrl + 'cat_05.png',
+            title: { fontSize: '250px', position: { top: '-20%', left: '50%', transform: 'translate(-50%, -0%)' } },
+            description: { position: { top: '80%', left: '50%', transform: 'translate(-50%, -0%)' } },
+            imageUrl: themeImagesUrl + 'cat_04.png',
             imageSize: { width: 'auto', height: '50vh' },
-            imagePosition: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' },
+            imagePosition: { top: '5%', left: '50%', transform: 'translate(-50%, -0%)' },
             buttonGroup: {
-                position: { top: '85%', left: '50%', transform: 'translate(-50%, -50%)' }
+                position: { top: '90%', left: '50%', transform: 'translate(-50%, -0%)' }
+            },
+        },
+        {
+            title: { fontSize: '250px', position: { top: '-20%', left: '50%', transform: 'translate(-50%, -0%)' } },
+            description: { position: { top: '80%', left: '50%', transform: 'translate(-50%, -0%)' } },
+            imageUrl: themeImagesUrl + 'cat_05.png',
+            imageSize: { width: 'auto', height: '50vh' },
+            imagePosition: { top: '5%', left: '50%', transform: 'translate(-50%, -0%)' },
+            buttonGroup: {
+                position: { top: '90%', left: '50%', transform: 'translate(-50%, -0%)' }
             },
         },
     ];
