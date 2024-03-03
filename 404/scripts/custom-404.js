@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function() {
         "ru_RU": {
             "title": "404",
             "description": "Что-то пошло не так...",
-            "goBackText": "Вернуться назад",
-            "showMoreText": "Показать еще одного кота"
+            "goBackText": "Вернуться на главную",
+            "showMoreText": "Покажите еще кота"
         }
     };
 
@@ -52,36 +52,40 @@ document.addEventListener("DOMContentLoaded", function() {
             imageSize: { width: 'auto', height: '45vh' },
             imagePosition: { top: '50%', left: '75%', transform: 'translate(-50%, -50%)' },
             buttonGroup: {
-                position: { top: '65%', left: '10%', transform: 'translate(-00%, -50%)' }
+                justifyContent: 'left',
+                position: { top: '75%', left: '10%', transform: 'translate(-00%, -50%)' }
             },
         },
         {
             title: { fontSize: '250px', position: { top: '20%', left: '10%', transform: 'translate(-0%, -50%)'  } },
             description: { position: { top: '55%', left: '10%', transform: 'translate(-0%, -50%)'  } },
             imageUrl: themeImagesUrl + 'cat_02.png',
-            imageSize: { width: 'auto', height: '50vh' },
+            imageSize: { width: 'auto', height: '45vh' },
             imagePosition: { top: '50%', left: '75%', transform: 'translate(-50%, -50%)' },
             buttonGroup: {
-                position: { top: '65%', left: '10%', transform: 'translate(-00%, -50%)' }
+                justifyContent: 'left',
+                position: { top: '75%', left: '10%', transform: 'translate(-00%, -50%)' }
             },
         },
         {
             title: { fontSize: '250px', position: { top: '20%', left: '10%', transform: 'translate(-0%, -50%)'  } },
             description: { position: { top: '55%', left: '10%', transform: 'translate(-0%, -50%)' } },
             imageUrl: themeImagesUrl + 'cat_03.png',
-            imageSize: { width: 'auto', height: '50vh' },
+            imageSize: { width: 'auto', height: '45vh' },
             imagePosition: { top: '50%', left: '75%', transform: 'translate(-50%, -50%)' },
             buttonGroup: {
-                position: { top: '65%', left: '10%', transform: 'translate(-00%, -50%)' }
+                justifyContent: 'left',
+                position: { top: '75%', left: '10%', transform: 'translate(-00%, -50%)' }
             },
         },
         {
             title: { fontSize: '250px', position: { top: '-20%', left: '50%', transform: 'translate(-50%, -0%)' } },
             description: { position: { top: '80%', left: '50%', transform: 'translate(-50%, -0%)' } },
             imageUrl: themeImagesUrl + 'cat_04.png',
-            imageSize: { width: 'auto', height: '50vh' },
+            imageSize: { width: 'auto', height: '45vh' },
             imagePosition: { top: '5%', left: '50%', transform: 'translate(-50%, -0%)' },
             buttonGroup: {
+                justifyContent: 'center',
                 position: { top: '90%', left: '50%', transform: 'translate(-50%, -0%)' }
             },
         },
@@ -89,9 +93,10 @@ document.addEventListener("DOMContentLoaded", function() {
             title: { fontSize: '250px', position: { top: '-20%', left: '50%', transform: 'translate(-50%, -0%)' } },
             description: { position: { top: '80%', left: '50%', transform: 'translate(-50%, -0%)' } },
             imageUrl: themeImagesUrl + 'cat_05.png',
-            imageSize: { width: 'auto', height: '50vh' },
+            imageSize: { width: 'auto', height: '45vh' },
             imagePosition: { top: '5%', left: '50%', transform: 'translate(-50%, -0%)' },
             buttonGroup: {
+                justifyContent: 'center',
                 position: { top: '90%', left: '50%', transform: 'translate(-50%, -0%)' }
             },
         },
@@ -100,21 +105,35 @@ document.addEventListener("DOMContentLoaded", function() {
     // Select a random configuration
     const config = configs[Math.floor(Math.random() * configs.length)];
 
-    const container = document.getElementById('custom-404');
-    container.innerHTML = `
-        <h1 class="title-404" style="font-size: ${config.title.fontSize}; position: absolute; top: ${config.title.position.top}; left: ${config.title.position.left}; transform: ${config.title.position.transform};">${title}</h1>
-        <img src="${config.imageUrl}" style="flex: 0 1 auto; width: ${config.imageSize.width}; height: ${config.imageSize.height}; position: absolute; top: ${config.imagePosition.top}; left: ${config.imagePosition.left}; transform: ${config.imagePosition.transform}">
-        <p class="description-404" style="position: absolute; top: ${config.description.position.top}; left: ${config.description.position.left}; transform: ${config.title.position.transform};">${description}</p>
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+    let containerHTML = '';
 
-        <div class="button-group-404" style="position: absolute; top: ${config.buttonGroup.position.top}; left: ${config.buttonGroup.position.left}; transform: ${config.buttonGroup.position.transform}; display: flex; gap: 20px;">
-        </div>
-    `;
+    if (viewportWidth <= 768) {
+        // Mobile-specific adjustments
+        containerHTML = `
+            <h1 class="title-404">${title}</h1>
+            <img class="img-404" src="${config.imageUrl}" alt="404 Image">
+            <p class="description-404">${description}</p>
+            <div class="button-group-404"></div>
+        `;
+    } else {
+        // Laptop/Desktop configurations
+        containerHTML = `
+            <h1 class="title-404" style="font-size: ${config.title.fontSize}; top: ${config.title.position.top}; left: ${config.title.position.left}; transform: ${config.title.position.transform};">${title}</h1>
+            <img class="img-404" src="${config.imageUrl}" style="width: ${config.imageSize.width}; height: ${config.imageSize.height}; top: ${config.imagePosition.top}; left: ${config.imagePosition.left}; transform: ${config.imagePosition.transform}">
+            <p class="description-404" style="top: ${config.description.position.top}; left: ${config.description.position.left}; transform: ${config.title.position.transform};">${description}</p>
+            <div class="button-group-404" style="top: ${config.buttonGroup.position.top}; left: ${config.buttonGroup.position.left}; transform: ${config.buttonGroup.position.transform}; justify-content: ${config.buttonGroup.justifyContent}"></div>
+        `;
+    }
+
+    const container = document.getElementById('custom-404');
+    container.innerHTML = containerHTML;
 
     const buttonGroup = container.querySelector('.button-group-404');
 
     buttonConfigs.forEach(buttonConfig => {
         const buttonWrapper = document.createElement('div');
-        buttonWrapper.className = "elementor-element elementor-tablet-align-center elementor-mobile-align-center elementor-widget elementor-widget-button";
+        buttonWrapper.className = "button-404";
         buttonWrapper.innerHTML = `
             <div class="elementor-widget-container">
                 <div class="button-404-wrapper elementor-button-wrapper">

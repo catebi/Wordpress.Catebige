@@ -115,11 +115,13 @@ add_action('wp_enqueue_scripts', 'add_clipboard_scripts');
 // add Custom 404 resources
 function add_custom_404_script() {
 	wp_enqueue_style( 'custom-404-css', get_template_directory_uri() . '/custom/404/css/styles-404.css' );
-
     wp_enqueue_script('custom-404-script', get_template_directory_uri() . '/custom/404/scripts/custom-404.js', array(), '1.0.0', true);
 
 	// Your existing theme base URL
-	$theme_base_url = get_template_directory_uri() . '/path/to/your/images';
+	$theme_base_url = get_template_directory_uri() . '/custom/404/images/';
+
+	// Get the current locale
+	$locale = get_locale();
 
 	// Combine themeImages and localizedTexts into one array
 	$script_data = array(
