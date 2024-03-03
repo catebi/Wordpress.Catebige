@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "title": "404",
             "description": "Что-то пошло не так...",
             "goBackText": "Вернуться на главную",
-            "showMoreText": "Покажите еще кота"
+            "showMoreText": "Покажите ещё кота"
         }
     };
 
