@@ -1,4 +1,4 @@
-    .copyboard-input-container {
+    .clipboard-input-container {
         cursor: pointer;
         font-family: monospace;
         display: flex;
@@ -9,7 +9,7 @@
         margin: auto;
     }
 
-    .input-field {
+    .clipboard-input-field {
         cursor: pointer;
         font-family: monospace;
         border: none;
@@ -19,7 +19,7 @@
         font-size: 16px;
     }
 
-    .tooltip {
+    .clipboard-tooltip {
         font-weight: 400;
         font-size: 16px;
         visibility: hidden;
@@ -30,13 +30,21 @@
         padding: 7px;
         position: relative;
         z-index: 1000;
-        top: 42px;
-        left: -40px;
         transform: translateX(-50%);
         transition: visibility 0.5s, opacity 0.5s ease-in-out;
     }
 
-    .copyboard-icon {
+    span.clipboard-tooltip {
+        left: -75px;
+        top: 45px;
+    }
+
+    div.clipboard-tooltip {
+        left: 0;
+        top: 42px;
+    }
+
+    .clipboard-icon {
         margin-left: 15px;
         cursor: pointer;
         width: 25px;
@@ -45,7 +53,7 @@
         background-size: cover;
     }
 
-    .copyboard-name-container {
+    .clipboard-name-container {
         max-width: 500px;
         margin: auto;
         display: flex;
@@ -60,18 +68,18 @@
         cursor: pointer;
     }
 
-    .name-container {
+    .clipboard-name {
         width: 100%;
         text-align: right;
     }
 
-    .tooltip-container {
+    .clipboard-tooltip-container {
         width: 0;
         display: flex;
         justify-content: flex-end;
     }
 
-    .tooltip.tooltip-name {
+    .clipboard-tooltip {
         visibility: hidden;
         opacity: 0;
         transition: opacity 0.3s ease-in-out;
