@@ -48,11 +48,6 @@ const map = L.map('map', {
   attributionControl: false,
   gestureHandling: true,
   gestureHandlingOptions: {
-    // text: {
-    //     touch: "Hey bro, use two fingers to move the map",
-    //     scroll: "Hey bro, use ctrl + scroll to zoom the map",
-    //     scrollMac: "Hey bro, use \u2318 + scroll to zoom the map"
-    // },
     duration: 1000
   }
 }).setView([41.6938, 44.8015], 13); // tbilisi geo-position
@@ -60,6 +55,11 @@ const map = L.map('map', {
 const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   maxZoom: 20,
 }).addTo(map);
+
+// Ensure map is properly sized
+window.setTimeout(function(x) {
+  map.invalidateSize();
+}, 1000);
 
 // Function to add markers to the map
 function addMarkers(points) {
